@@ -3,60 +3,48 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
-  <meta name="theme-color" content="#1d1814" />
+  <meta name="theme-color" content="#211b16" />
   <meta name="description" content="1930年1月5日，毛泽东写于福建省上杭县古田镇协成店。《星星之火，可以燎原》课堂阅读页。" />
   <title>一九三〇年一月五日 · 古田来信</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="intro-active">
+<body>
   <main id="app">
-    <section class="intro" id="intro" aria-label="古田来信">
+    <section class="intro" id="intro" aria-labelledby="letter-heading">
       <div class="ambient" aria-hidden="true"></div>
-      <div class="desk-light" aria-hidden="true"></div>
 
       <div class="stage" id="stage">
         <div class="paper-preview" aria-hidden="true">
           <div class="paper-preview-inner">
             <span>星星之火，可以燎原</span>
-            <i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i>
           </div>
         </div>
 
         <button class="envelope-button" id="openEnvelope" type="button" aria-label="打开信封">
           <div class="envelope" aria-hidden="true">
             <div class="envelope-back"></div>
-            <div class="envelope-liner"></div>
             <div class="envelope-paper-grain"></div>
-
             <div class="envelope-front">
-              <div class="edge-wear"></div>
               <div class="crease crease-a"></div>
               <div class="crease crease-b"></div>
-              <div class="crease crease-c"></div>
-
               <div class="letter-meta">
                 <p class="date">一九三〇年一月五日</p>
-                <h1>毛泽东</h1>
+                <h1 id="letter-heading">毛泽东</h1>
                 <p class="place">写于福建省上杭县古田镇协成店</p>
               </div>
-
               <div class="seal" aria-hidden="true"><span>古田</span></div>
               <div class="postmark" aria-hidden="true">
                 <span>一九三〇</span>
                 <b></b><b></b><b></b>
               </div>
-              <div class="ink-smudge" aria-hidden="true"></div>
             </div>
-
-            <div class="envelope-flap">
-              <span class="flap-face flap-outer"></span>
-              <span class="flap-face flap-inner"></span>
-            </div>
+            <div class="envelope-flap"></div>
           </div>
         </button>
 
         <button class="open-label" id="openLabel" type="button">打开信封</button>
-        <p class="hint" id="hint">轻触信封，展开一封写于古田的回信</p>
+        <p class="hint" id="hint">轻触信封，读一封写于古田的回信</p>
       </div>
     </section>
 
@@ -92,13 +80,13 @@
       </div>
 
       <footer class="reader-footer">
-        <p>课堂阅读默认采用逐页高清呈现，以提高微信、Safari 与安卓浏览器的兼容性。</p>
+        <p>原始 PDF 已随网页项目保留，课堂阅读默认采用逐页高清呈现，以提高手机浏览器兼容性。</p>
         <a href="document.pdf" target="_blank" rel="noopener">打开原始 PDF</a>
       </footer>
     </section>
   </main>
 
   <noscript>请启用 JavaScript 以观看信封动画。PDF 原文可直接打开：<a href="document.pdf">document.pdf</a></noscript>
-  <script src="script.js?v=2"></script>
+  <script src="script.js"></script>
 </body>
 </html>
