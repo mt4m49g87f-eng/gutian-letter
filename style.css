@@ -402,3 +402,170 @@ noscript { display: block; padding: 20px; background: #fff7e5; color: #3c3022; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
 }
+
+/* =========================================================
+   V3 · 只重做“开信”动作。静止状态沿用第一版信封视觉。
+   顺序：抬起 → 顶盖打开 → 信封三片展开 → 信纸抽出 → 正文
+   ========================================================= */
+.envelope-inner {
+  position: absolute;
+  inset: 2px;
+  z-index: 3;
+  border-radius: 3px 3px 7px 7px;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(73,45,23,.34) 0%, rgba(104,70,36,.18) 18%, transparent 46%),
+    linear-gradient(160deg, #b59260 0%, #c6aa76 58%, #ae8753 100%);
+  box-shadow:
+    inset 0 16px 24px rgba(63,40,21,.18),
+    inset 0 0 30px rgba(77,49,24,.12);
+}
+.envelope-inner::before {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 5%;
+  height: 28%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(180deg, rgba(79,49,25,.22), rgba(122,83,45,.06));
+  opacity: .7;
+}
+
+.envelope-unfold {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  opacity: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+.fold-panel {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(91,61,31,.28);
+  background:
+    radial-gradient(circle at 22% 22%, rgba(255,255,255,.10), transparent 25%),
+    linear-gradient(165deg, #cfb47e 0%, #c6a56c 56%, #b78f59 100%);
+  box-shadow: inset 0 0 35px rgba(87,55,25,.09);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+.fold-left {
+  clip-path: polygon(0 0, 53% 50%, 0 100%);
+  transform-origin: 0 50%;
+}
+.fold-right {
+  clip-path: polygon(100% 0, 47% 50%, 100% 100%);
+  transform-origin: 100% 50%;
+}
+.fold-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 50% 38%);
+  transform-origin: 50% 100%;
+}
+
+/* V3 animation timeline */
+.intro.opening .envelope-button {
+  animation: envelopeLiftV3 4.9s cubic-bezier(.2,.72,.18,1) forwards;
+}
+.intro.opening .envelope-flap {
+  z-index: 9;
+  backface-visibility: visible;
+  animation: flapOpenV3 1.05s cubic-bezier(.22,.72,.18,1) .42s forwards;
+}
+.intro.opening .envelope-front {
+  animation: frontReleaseV3 .42s ease 1.24s forwards;
+}
+.intro.opening .envelope-inner {
+  animation: innerRevealV3 .38s ease 1.12s forwards;
+}
+.intro.opening .envelope-unfold {
+  animation: unfoldRevealV3 .18s linear 1.16s forwards;
+}
+.intro.opening .fold-left {
+  animation: foldLeftV3 1.02s cubic-bezier(.2,.68,.18,1) 1.34s forwards;
+}
+.intro.opening .fold-right {
+  animation: foldRightV3 1.02s cubic-bezier(.2,.68,.18,1) 1.34s forwards;
+}
+.intro.opening .fold-bottom {
+  animation: foldBottomV3 1.08s cubic-bezier(.18,.7,.18,1) 1.42s forwards;
+}
+.intro.opening .paper-preview {
+  animation: paperRiseV3 2.82s cubic-bezier(.18,.72,.16,1) 1.88s forwards;
+}
+.intro.opening .envelope-back,
+.intro.opening .envelope-paper-grain,
+.intro.opening .envelope-inner,
+.intro.opening .envelope-unfold,
+.intro.opening .envelope-flap {
+  animation-fill-mode: forwards;
+}
+.intro.opening .open-label,
+.intro.opening .hint {
+  opacity: 0;
+  pointer-events: none;
+}
+.intro.opening .ambient {
+  opacity: .30;
+  transform: translateY(188px) scale(.84);
+}
+
+@keyframes envelopeLiftV3 {
+  0%   { transform: translateY(6px) scale(1); opacity: 1; }
+  12%  { transform: translateY(-10px) scale(1.006); opacity: 1; }
+  38%  { transform: translateY(-7px) scale(1.006); opacity: 1; }
+  66%  { transform: translateY(0) scale(.995); opacity: 1; }
+  83%  { transform: translateY(18px) scale(.965); opacity: .92; }
+  100% { transform: translateY(42px) scale(.92); opacity: 0; }
+}
+@keyframes flapOpenV3 {
+  0%   { transform: rotateX(0deg); filter: drop-shadow(0 2px 1px rgba(70,45,24,.14)); }
+  18%  { transform: rotateX(-18deg); }
+  62%  { transform: rotateX(-132deg); }
+  100% { transform: rotateX(-176deg); filter: drop-shadow(0 -5px 6px rgba(55,34,17,.18)); }
+}
+@keyframes frontReleaseV3 {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes innerRevealV3 {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes unfoldRevealV3 {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes foldLeftV3 {
+  0%   { transform: rotateY(0deg) translateX(0); opacity: 1; }
+  64%  { transform: rotateY(-63deg) translateX(-2%); opacity: .95; }
+  100% { transform: rotateY(-76deg) translateX(-7%); opacity: .40; }
+}
+@keyframes foldRightV3 {
+  0%   { transform: rotateY(0deg) translateX(0); opacity: 1; }
+  64%  { transform: rotateY(63deg) translateX(2%); opacity: .95; }
+  100% { transform: rotateY(76deg) translateX(7%); opacity: .40; }
+}
+@keyframes foldBottomV3 {
+  0%   { transform: rotateX(0deg) translateY(0); opacity: 1; }
+  58%  { transform: rotateX(54deg) translateY(3%); opacity: .95; }
+  100% { transform: rotateX(72deg) translateY(9%); opacity: .34; }
+}
+@keyframes paperRiseV3 {
+  0%   { z-index: 3; opacity: 0; transform: translate(-50%, 4%) scale(.84) rotate(.25deg); }
+  7%   { z-index: 3; opacity: .92; transform: translate(-50%, -4%) scale(.86) rotate(.15deg); }
+  24%  { z-index: 3; opacity: 1; transform: translate(-50%, -18%) scale(.89) rotate(-.3deg); }
+  38%  { z-index: 3; opacity: 1; transform: translate(-50%, -23%) scale(.90) rotate(-.15deg); }
+  41%  { z-index: 11; }
+  70%  { z-index: 11; opacity: 1; transform: translate(-50%, -67%) scale(1.01) rotate(.15deg); }
+  88%  { z-index: 11; opacity: 1; transform: translate(-50%, -74%) scale(1.075) rotate(0deg); }
+  100% { z-index: 11; opacity: 0; transform: translate(-50%, -77%) scale(1.11) rotate(0deg); }
+}
+
+@media (max-width: 430px) {
+  .intro.opening .fold-left { transform-origin: 2% 50%; }
+  .intro.opening .fold-right { transform-origin: 98% 50%; }
+}

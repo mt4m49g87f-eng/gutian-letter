@@ -43,7 +43,7 @@
     });
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.setTimeout(revealReader, reduced ? 80 : 4400);
+    window.setTimeout(revealReader, reduced ? 80 : 4950);
   }
 
   openEnvelope.addEventListener('click', startOpening);
@@ -76,4 +76,5 @@
   window.addEventListener('orientationchange', () => setTimeout(applyZoom, 180), { passive: true });
 
   applyZoom();
+
 })();
